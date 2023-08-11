@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200;300;400;500;600;700;800&family=Major+Mono+Display&family=MedievalSharp&family=Orbitron:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Preahvihear&family=Press+Start+2P&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Preahvihear', sans-serif;
+}
+
+#containerMain {
+    background: url(./Nero.JPG);
+    background-size: 400px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nero {
+    width: 320px;
+    height: 160px;
+    border-radius: 5px;
+    margin-top: -5%;
+}
+
+.pageText {
+    margin-bottom: -5%;
+    font-size: 14px;
+}
+
+#nextFriday {
+    margin-bottom: -5%;
+    font-size: 18px;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    color: #0D79B3;
+}
+
+.yesButton {
+    font-family: 'Preahvihear', sans-serif;
+    font-size: 8px;
+    background-color: #48BF84;
+    border-radius: 5px;
+    font-weight: bold; 
+    margin-right: 5px;
+    width: '50px'
+}
+
+.noButton {
+    font-family: 'Preahvihear', sans-serif;
+    font-size: 8px;
+    background-color: #E53A40;
+    border-radius: 5px;
+    font-weight: bold; 
+    margin-left: -2px;
+}
