@@ -2,61 +2,43 @@ import React, { useState, useEffect } from 'react';
 import Nero from './Nero.JPG';
 import './style.css';
 
+// Import the JSON data
+import attendanceData from './data/data.json';
+
 export default function Page() {
     const [chrisAttendance, setChrisAttendance] = useState(null);
     const [gregAttendance, setGregAttendance] = useState(null);
     const [neilAttendance, setNeilAttendance] = useState(null);
 
     useEffect(() => {
-        // Fetch initial attendance data when the component mounts
-        fetchAttendance();
+        // Set initial attendance data when the component mounts
+        setChrisAttendance(attendanceData.find(item => item.name === 'Chris') || null);
+        setGregAttendance(attendanceData.find(item => item.name === 'Greg') || null);
+        setNeilAttendance(attendanceData.find(item => item.name === 'Neil') || null);
     }, []);
 
-    async function fetchAttendance() {
-        try {
-            const response = await fetch('https://gbcm.netlify.app/attendance');
-            if (response.ok) {
-                const attendanceData = await response.json();
-                setChrisAttendance(attendanceData.find(item => item.name === 'Chris') || null);
-                setGregAttendance(attendanceData.find(item => item.name === 'Greg') || null);
-                setNeilAttendance(attendanceData.find(item => item.name === 'Neil') || null);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     async function handleAttendance(id, isComing) {
-        try {
-            const response = await fetch(`https://gbcm.netlify.app/attendance/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ isComing })
-            });
-
-            if (response.ok) {
-                // Update local state directly from the response
-                const updatedAttendance = await response.json();
-                if (id === 1) {
-                    setChrisAttendance(updatedAttendance);
-                } else if (id === 2) {
-                    setGregAttendance(updatedAttendance);
-                } else if (id === 3) {
-                    setNeilAttendance(updatedAttendance);
-                }
-            } else {
-                console.error(`Error updating attendance for ID ${id}.`);
+        // Simulate a PATCH request by updating the local JSON data
+        const updatedData = attendanceData.map(item => {
+            if (item.id === id) {
+                return { ...item, isComing };
             }
-        } catch (error) {
-            console.error(error);
+            return item;
+        });
+
+        // Update the local state with the modified data
+        if (id === 1) {
+            setChrisAttendance(updatedData.find(item => item.name === 'Chris') || null);
+        } else if (id === 2) {
+            setGregAttendance(updatedData.find(item => item.name === 'Greg') || null);
+        } else if (id === 3) {
+            setNeilAttendance(updatedData.find(item => item.name === 'Neil') || null);
         }
     }
 
     return (
         <div>
-        <div>
+            <div>
                 <h1 style={{ fontSize: '50px', fontWeight: 'bold', color: '#0D79B3', marginTop: '-2px', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black' }}>G  B  C M</h1>
                 <h5 style={{ fontSize: '22px', color: '#0D79B3', marginTop: '-15%', textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}>Good Boys Coffee Morning</h5>
             </div>
@@ -73,7 +55,7 @@ export default function Page() {
                 <p id="nextFriday">Friday 1st September</p>
             </div>
             <h1>Attendance List</h1>
-            <table style={{margin: '0 auto'}}>
+            <table style={{ margin: '0 auto' }}>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -127,7 +109,7 @@ export default function Page() {
                 </tbody>
             </table>
             <h5>Let us know if you want to be added.</h5>
-            <h5 style={{color: 'red'}}>Good boys only!</h5>
+            <h5 style={{ color: 'red' }}>Good boys only!</h5>
         </div>
     );
 }
