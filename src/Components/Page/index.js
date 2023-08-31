@@ -3,7 +3,7 @@ import Nero from './Nero.JPG';
 import './style.css';
 
 // Import the JSON data
-import attendanceData from './data/data.json';
+import attendanceData from '../Data/data.json';
 
 export default function Page() {
     const [chrisAttendance, setChrisAttendance] = useState(null);
