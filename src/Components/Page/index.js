@@ -14,7 +14,7 @@ export default function Page() {
 
     async function fetchAttendance() {
         try {
-            const response = await fetch('http://localhost:3001/attendance');
+            const response = await fetch('http://https://gbcm.netlify.app//attendance');
             if (response.ok) {
                 const attendanceData = await response.json();
                 setChrisAttendance(attendanceData.find(item => item.name === 'Chris') || null);
@@ -28,7 +28,7 @@ export default function Page() {
 
     async function handleAttendance(id, isComing) {
         try {
-            const response = await fetch(`http://localhost:3001/attendance/${id}`, {
+            const response = await fetch(`http://https://gbcm.netlify.app//attendance/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
