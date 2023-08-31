@@ -1,0 +1,19 @@
+{
+  "attendance": [
+    {
+      "id": 1,
+      "name": "Chris",
+      "isComing": true
+    },
+    {
+      "id": 2,
+      "name": "Greg",
+      "isComing": true
+    },
+    {
+      "id": 3,
+      "name": "Neil",
+      "isComing": true
+    }
+  ]
+}
