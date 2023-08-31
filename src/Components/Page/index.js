@@ -6,34 +6,24 @@ import './style.css';
 import attendanceData from '../Data/data.json';
 
 export default function Page() {
-    const [chrisAttendance, setChrisAttendance] = useState(null);
-    const [gregAttendance, setGregAttendance] = useState(null);
-    const [neilAttendance, setNeilAttendance] = useState(null);
+    const [attendanceList, setAttendanceList] = useState([]);
 
     useEffect(() => {
         // Set initial attendance data when the component mounts
-        setChrisAttendance(attendanceData.find(item => item.name === 'Chris') || null);
-        setGregAttendance(attendanceData.find(item => item.name === 'Greg') || null);
-        setNeilAttendance(attendanceData.find(item => item.name === 'Neil') || null);
+        setAttendanceList(attendanceData.attendance);
     }, []);
 
     async function handleAttendance(id, isComing) {
-        // Simulate a PATCH request by updating the local JSON data
-        const updatedData = attendanceData.map(item => {
+        // Update the local attendance list with modified data
+        const updatedAttendanceList = attendanceList.map(item => {
             if (item.id === id) {
                 return { ...item, isComing };
             }
             return item;
         });
 
-        // Update the local state with the modified data
-        if (id === 1) {
-            setChrisAttendance(updatedData.find(item => item.name === 'Chris') || null);
-        } else if (id === 2) {
-            setGregAttendance(updatedData.find(item => item.name === 'Greg') || null);
-        } else if (id === 3) {
-            setNeilAttendance(updatedData.find(item => item.name === 'Neil') || null);
-        }
+        // Update the local state with the modified attendance list
+        setAttendanceList(updatedAttendanceList);
     }
 
     return (
@@ -64,48 +54,18 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Chris</td>
-                        <td>
-                            <button onClick={() => handleAttendance(1, true)} className="yesButton">Coming</button>
-                            <button onClick={() => handleAttendance(1, false)} className="noButton">Not coming</button>
-                        </td>
-                        <td>
-                            {chrisAttendance ? (
-                                chrisAttendance.isComing ? <span style={{ color: 'green' }}>Coming!</span> : <span style={{ color: 'red' }}>Not coming</span>
-                            ) : (
-                                <span>Loading...</span>
-                            )}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Greg</td>
-                        <td>
-                            <button onClick={() => handleAttendance(2, true)} className="yesButton">Coming</button>
-                            <button onClick={() => handleAttendance(2, false)} className="noButton">Not coming</button>
-                        </td>
-                        <td>
-                            {gregAttendance ? (
-                                gregAttendance.isComing ? <span style={{ color: 'green' }}>Coming!</span> : <span style={{ color: 'red' }}>Not coming</span>
-                            ) : (
-                                <span>Loading...</span>
-                            )}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Neil</td>
-                        <td>
-                            <button onClick={() => handleAttendance(3, true)} className="yesButton">Coming</button>
-                            <button onClick={() => handleAttendance(3, false)} className="noButton">Not coming</button>
-                        </td>
-                        <td>
-                            {neilAttendance ? (
-                                neilAttendance.isComing ? <span style={{ color: 'green' }}>Coming!</span> : <span style={{ color: 'red' }}>Not coming</span>
-                            ) : (
-                                <span>Loading...</span>
-                            )}
-                        </td>
-                    </tr>
+                    {attendanceList.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.name}</td>
+                            <td>
+                                <button onClick={() => handleAttendance(item.id, true)} className="yesButton">Coming</button>
+                                <button onClick={() => handleAttendance(item.id, false)} className="noButton">Not coming</button>
+                            </td>
+                            <td>
+                                {item.isComing ? <span style={{ color: 'green' }}>Coming!</span> : <span style={{ color: 'red' }}>Not coming</span>}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
             <h5>Let us know if you want to be added.</h5>
