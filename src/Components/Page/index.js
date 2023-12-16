@@ -14,17 +14,49 @@ export default function Page() {
     }, []);
 
     async function handleAttendance(id, isComing) {
-        // Update the local attendance list with modified data
-        const updatedAttendanceList = attendanceList.map(item => {
-            if (item.id === id) {
-                return { ...item, isComing };
-            }
-            return item;
+        const response = await fetch(`/api/updateAttendance/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ isComing }),
         });
 
-        // Update the local state with the modified attendance list
-        setAttendanceList(updatedAttendanceList);
+        if (response.ok) {
+            // Update the attendance list after successful update
+            const updatedList = attendanceList.map(item => {
+                if (item.id === id) {
+                    return { ...item, isComing };
+                }
+                return item;
+            });
+            setAttendanceList(updatedList);
+        } else {
+            // Handle error case
+            console.error('Failed to update attendance.');
+        }
     }
+
+    async function handleNotComing(id) {
+        try {
+            const response = await fetch(`/api/updateAttendance/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ isComing: false }),
+            });
+    
+            if (response.ok) {
+                // Update the attendance list...
+            } else {
+                console.error('Response not OK:', response);
+            }
+        } catch (error) {
+            console.error('Error in fetch:', error);
+        }
+    }
+
 
     return (
         <div>
@@ -59,7 +91,7 @@ export default function Page() {
                             <td>{item.name}</td>
                             <td>
                                 <button onClick={() => handleAttendance(item.id, true)} className="yesButton">Coming</button>
-                                <button onClick={() => handleAttendance(item.id, false)} className="noButton">Not coming</button>
+                                <button onClick={() => handleNotComing(item.id, false)} className="noButton">Not coming</button>
                             </td>
                             <td>
                                 {item.isComing ? <span style={{ color: 'green' }}>Coming!</span> : <span style={{ color: 'red' }}>Not coming</span>}

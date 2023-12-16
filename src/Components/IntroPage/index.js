@@ -11,6 +11,7 @@ export default function IntroPage() {
     function handleClick() {
         setClicked(true);
     }
+    
     return (
         <div>
         {!clicked && (

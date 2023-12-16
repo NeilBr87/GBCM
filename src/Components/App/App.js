@@ -1,10 +1,10 @@
-import IntroPage from '../IntroPage';
+import Max from '../Max';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <IntroPage />
+      <Max />
     </div>
   );
 }
